@@ -5,10 +5,12 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/sheet-to-scan-form/',
+  base: mode === 'production' ? '/sheet-to-scan-form/' : '/',
   server: {
     host: "::",
     port: 8080,
+    strictPort: true,
+    open: '/',
   },
   plugins: [
     react(),
