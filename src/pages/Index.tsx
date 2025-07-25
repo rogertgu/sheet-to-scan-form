@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import * as XLSX from 'xlsx';
+import html2canvas from 'html2canvas';
 
 const Index = () => {
+  const formRef = useRef<HTMLDivElement>(null);
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [correctedAnswers, setCorrectedAnswers] = useState<Record<number, string>>({});
   const [textField, setTextField] = useState("");
   const [fileName, setFileName] = useState("respuestas");
+  const [isCorrecting, setIsCorrecting] = useState(false);
 
   const handleAnswerChange = (questionNumber: number, answer: string) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionNumber]: answer
-    }));
+    if (isCorrecting) {
+      setCorrectedAnswers(prev => ({
+        ...prev,
+        [questionNumber]: answer
+      }));
+    } else {
+      setAnswers(prev => ({
+        ...prev,
+        [questionNumber]: answer
+      }));
+    }
   };
 
   const generateExcel = () => {
@@ -71,7 +82,13 @@ const Index = () => {
             />
             <Label
               htmlFor={`q${questionNumber}-${option}`}
-              className={`answer-box ${answers[questionNumber] === option ? 'selected' : ''}`}
+              className={`answer-box ${
+                correctedAnswers[questionNumber] === option
+                  ? 'correcting'
+                  : answers[questionNumber] === option
+                  ? 'selected'
+                  : ''
+              }`}
             >
               {option}
             </Label>
@@ -94,8 +111,37 @@ const Index = () => {
     </div>
   );
 
+  const handleDownloadImage = async () => {
+    if (!formRef.current) return;
+    
+    try {
+      const canvas = await html2canvas(formRef.current, {
+        scale: 2, // Aumenta la resolución de la imagen
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+        width: formRef.current.scrollWidth,
+        height: formRef.current.scrollHeight,
+        windowWidth: formRef.current.scrollWidth,
+        windowHeight: formRef.current.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0
+      });
+
+      // Crear un enlace temporal para descargar la imagen
+      const link = document.createElement('a');
+      link.download = `formulario-${new Date().toISOString().slice(0, 10)}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (error) {
+      console.error('Error al generar la imagen:', error);
+    }
+  };
+
   return (
-    <div className="exam-sheet">
+    <div className="exam-sheet" ref={formRef}>
       <div className="sheet-header">
         <h1>EXAMEN DE CUALIFICACIÓN INICIAL</h1>
       </div>
@@ -155,8 +201,14 @@ const Index = () => {
       </div>
 
       <div className="export-section">
+        <Button onClick={() => setIsCorrecting(!isCorrecting)} className={`export-button ${isCorrecting ? 'correcting-active' : ''}`}>
+          Corregir
+        </Button>
         <Button onClick={generateExcel} className="export-button">
           Generar Hoja de Cálculo excel
+        </Button>
+        <Button onClick={handleDownloadImage} className="export-button">
+          Descargar Imagen
         </Button>
       </div>
     </div>

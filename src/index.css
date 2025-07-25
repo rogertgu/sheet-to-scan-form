@@ -252,7 +252,17 @@ All colors MUST be HSL.
 }
 
 .answer-box.selected {
-  background: #333;
+  background-color: #333;
+  color: white;
+}
+
+.answer-box.correcting {
+  background-color: #3b82f6; /* Blue-500 from Tailwind */
+  color: white;
+}
+
+.export-button.correcting-active {
+  background-color: #3b82f6;
   color: white;
 }
 
