@@ -17,15 +17,15 @@ const Index = () => {
     // Create CSV content
     let csvContent = "Pregunta,Respuesta\n";
     
-    // Add main questions (1-103)
-    for (let i = 1; i <= 103; i++) {
+    // Add main questions (1-100)
+    for (let i = 1; i <= 100; i++) {
       const answer = answers[i] || "";
       csvContent += `${i},${answer}\n`;
     }
     
-    // Add additional questions (1ª, 2ª, 3ª)
-    for (let i = 104; i <= 106; i++) {
-      const questionLabel = i === 104 ? "1ª" : i === 105 ? "2ª" : "3ª";
+    // Add additional questions (1ª, 2ª, 3ª) - questions 101, 102, 103
+    for (let i = 101; i <= 103; i++) {
+      const questionLabel = i === 101 ? "1ª" : i === 102 ? "2ª" : "3ª";
       const answer = answers[i] || "";
       csvContent += `${questionLabel},${answer}\n`;
     }
@@ -100,22 +100,22 @@ const Index = () => {
         
         <div className="section-divider"></div>
         
-        {/* Main sections: Questions 26-103 in 5 columns */}
+        {/* Main sections: Questions 26-100 in 5 columns */}
         <div className="main-sections">
-          {renderColumn(26, 41)}
-          {renderColumn(42, 57)}
-          {renderColumn(58, 73)}
-          {renderColumn(74, 89)}
-          {renderColumn(90, 103)}
+          {renderColumn(26, 40)}
+          {renderColumn(41, 55)}
+          {renderColumn(56, 70)}
+          {renderColumn(71, 85)}
+          {renderColumn(86, 100)}
         </div>
         
         <div className="section-divider"></div>
         
         {/* Additional questions */}
         <div className="additional-questions">
-          {renderQuestion(104, "1ª")}
-          {renderQuestion(105, "2ª")}
-          {renderQuestion(106, "3ª")}
+          {renderQuestion(101, "1ª")}
+          {renderQuestion(102, "2ª")}
+          {renderQuestion(103, "3ª")}
         </div>
       </div>
 
