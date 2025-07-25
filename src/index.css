@@ -116,33 +116,31 @@ All colors MUST be HSL.
 
 .sheet-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   border-bottom: 2px solid #000;
   padding-bottom: 20px;
-  position: relative;
 }
 
 .sheet-header h1 {
   font-size: 18px;
   font-weight: bold;
-  margin: 0 0 20px 0;
+  margin: 0;
   text-transform: uppercase;
 }
 
 .header-fields {
-  position: absolute;
-  top: 0;
-  right: 0;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 300px;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+  padding: 15px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 250px;
 }
 
 .field-group label {
@@ -152,7 +150,7 @@ All colors MUST be HSL.
 }
 
 .field-group input {
-  padding: 5px 8px;
+  padding: 8px 10px;
   border: 1px solid #333;
   border-radius: 3px;
   font-size: 12px;

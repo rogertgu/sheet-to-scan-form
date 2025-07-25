@@ -98,27 +98,28 @@ const Index = () => {
     <div className="exam-sheet">
       <div className="sheet-header">
         <h1>EXAMEN DE CUALIFICACIÓN INICIAL</h1>
-        <div className="header-fields">
-          <div className="field-group">
-            <Label htmlFor="textField">Texto adicional (máx. 100 caracteres):</Label>
-            <Input
-              id="textField"
-              value={textField}
-              onChange={(e) => setTextField(e.target.value.slice(0, 100))}
-              maxLength={100}
-              placeholder="Escriba aquí..."
-            />
-            <span className="char-counter">{textField.length}/100</span>
-          </div>
-          <div className="field-group">
-            <Label htmlFor="fileName">Nombre del archivo:</Label>
-            <Input
-              id="fileName"
-              value={fileName}
-              onChange={(e) => setFileName(e.target.value)}
-              placeholder="respuestas"
-            />
-          </div>
+      </div>
+      
+      <div className="header-fields">
+        <div className="field-group">
+          <Label htmlFor="textField">Texto adicional (máx. 100 caracteres):</Label>
+          <Input
+            id="textField"
+            value={textField}
+            onChange={(e) => setTextField(e.target.value.slice(0, 100))}
+            maxLength={100}
+            placeholder="Escriba aquí..."
+          />
+          <span className="char-counter">{textField.length}/100</span>
+        </div>
+        <div className="field-group">
+          <Label htmlFor="fileName">Nombre del archivo:</Label>
+          <Input
+            id="fileName"
+            value={fileName}
+            onChange={(e) => setFileName(e.target.value)}
+            placeholder="respuestas"
+          />
         </div>
       </div>
       
