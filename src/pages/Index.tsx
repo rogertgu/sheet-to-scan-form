@@ -89,19 +89,24 @@ const Index = () => {
       </div>
       
       <div className="questions-container">
-        {/* First section: Questions 1-25 */}
+        {/* First section: Questions 1-25 in 5 columns */}
         <div className="first-section">
-          {renderColumn(1, 25)}
+          {renderColumn(1, 5)}
+          {renderColumn(6, 10)}
+          {renderColumn(11, 15)}
+          {renderColumn(16, 20)}
+          {renderColumn(21, 25)}
         </div>
         
         <div className="section-divider"></div>
         
-        {/* Main sections: Questions 26-103 in 4 columns */}
+        {/* Main sections: Questions 26-103 in 5 columns */}
         <div className="main-sections">
-          {renderColumn(26, 45)}
-          {renderColumn(46, 65)}
-          {renderColumn(66, 85)}
-          {renderColumn(86, 103)}
+          {renderColumn(26, 41)}
+          {renderColumn(42, 57)}
+          {renderColumn(58, 73)}
+          {renderColumn(74, 89)}
+          {renderColumn(90, 103)}
         </div>
         
         <div className="section-divider"></div>
