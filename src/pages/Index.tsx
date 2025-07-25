@@ -2,9 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import * as XLSX from 'xlsx';
 
 const Index = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [textField, setTextField] = useState("");
+  const [fileName, setFileName] = useState("respuestas");
 
   const handleAnswerChange = (questionNumber: number, answer: string) => {
     setAnswers(prev => ({
@@ -14,32 +18,40 @@ const Index = () => {
   };
 
   const generateExcel = () => {
-    // Create CSV content
-    let csvContent = "Pregunta,Respuesta\n";
+    // Create data array for Excel
+    const data = [];
+    
+    // Add header row
+    data.push(['Pregunta', 'Respuesta']);
     
     // Add main questions (1-100)
     for (let i = 1; i <= 100; i++) {
       const answer = answers[i] || "";
-      csvContent += `${i},${answer}\n`;
+      data.push([i.toString(), answer]);
     }
     
     // Add additional questions (1ª, 2ª, 3ª) - questions 101, 102, 103
     for (let i = 101; i <= 103; i++) {
       const questionLabel = i === 101 ? "1ª" : i === 102 ? "2ª" : "3ª";
       const answer = answers[i] || "";
-      csvContent += `${questionLabel},${answer}\n`;
+      data.push([questionLabel, answer]);
     }
 
-    // Create and download file
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "respuestas.xlsx");
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Add text field data if provided
+    if (textField.trim()) {
+      data.push(['Texto adicional', textField]);
+    }
+
+    // Create workbook and worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Respuestas");
+    
+    // Generate Excel file and download
+    const filename = fileName.trim() ? `${fileName}.xlsx` : 'respuestas.xlsx';
+    XLSX.writeFile(wb, filename);
   };
 
   const renderQuestion = (questionNumber: number, label?: string) => (
@@ -86,6 +98,28 @@ const Index = () => {
     <div className="exam-sheet">
       <div className="sheet-header">
         <h1>EXAMEN DE CUALIFICACIÓN INICIAL</h1>
+        <div className="header-fields">
+          <div className="field-group">
+            <Label htmlFor="textField">Texto adicional (máx. 100 caracteres):</Label>
+            <Input
+              id="textField"
+              value={textField}
+              onChange={(e) => setTextField(e.target.value.slice(0, 100))}
+              maxLength={100}
+              placeholder="Escriba aquí..."
+            />
+            <span className="char-counter">{textField.length}/100</span>
+          </div>
+          <div className="field-group">
+            <Label htmlFor="fileName">Nombre del archivo:</Label>
+            <Input
+              id="fileName"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              placeholder="respuestas"
+            />
+          </div>
+        </div>
       </div>
       
       <div className="questions-container">
