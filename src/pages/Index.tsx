@@ -105,6 +105,10 @@ const Index = () => {
                   ? 'selected'
                   : ''
               }`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleAnswerChange(questionNumber, option);
+              }}
             >
               {option}
             </Label>
