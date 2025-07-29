@@ -16,15 +16,31 @@ const Index = () => {
 
   const handleAnswerChange = (questionNumber: number, answer: string) => {
     if (isCorrecting) {
-      setCorrectedAnswers(prev => ({
-        ...prev,
-        [questionNumber]: answer
-      }));
+      setCorrectedAnswers(prev => {
+        // Si ya está seleccionada la misma respuesta, la deseleccionamos
+        if (prev[questionNumber] === answer) {
+          const newAnswers = { ...prev };
+          delete newAnswers[questionNumber];
+          return newAnswers;
+        }
+        return {
+          ...prev,
+          [questionNumber]: answer
+        };
+      });
     } else {
-      setAnswers(prev => ({
-        ...prev,
-        [questionNumber]: answer
-      }));
+      setAnswers(prev => {
+        // Si ya está seleccionada la misma respuesta, la deseleccionamos
+        if (prev[questionNumber] === answer) {
+          const newAnswers = { ...prev };
+          delete newAnswers[questionNumber];
+          return newAnswers;
+        }
+        return {
+          ...prev,
+          [questionNumber]: answer
+        };
+      });
     }
   };
 
