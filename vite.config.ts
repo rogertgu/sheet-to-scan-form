@@ -8,8 +8,7 @@ export default defineConfig(({ mode }) => ({
   base: mode === 'production' ? '/sheet-to-scan-form/' : '/',
   server: {
     host: "::",
-    port: 8080,
-    strictPort: true,
+
     open: '/',
   },
   plugins: [
