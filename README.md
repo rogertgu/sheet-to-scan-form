@@ -1,73 +1,62 @@
-# Welcome to your Lovable project
+# Sheet to Scan Form
 
-## Project info
+Este proyecto es una aplicación de React diseñada para crear y gestionar hojas de respuestas de exámenes tipo test. Permite a los usuarios introducir respuestas, corregirlas y exportar los resultados a un archivo de Excel o como una captura de pantalla del formulario.
 
-**URL**: https://lovable.dev/projects/d6536054-bd8a-45bb-89d5-72f58597a3a9
+## Descripción del Proyecto
 
-## How can I edit this code?
+La aplicación proporciona una interfaz para rellenar una hoja de respuestas con hasta 100 preguntas de opción múltiple (A, B, C, D) y 3 preguntas adicionales. Los usuarios pueden cambiar sus respuestas y marcarlas para su corrección. La aplicación calcula la puntuación final y permite la exportación de los datos.
 
-There are several ways of editing your application.
+## Tecnologías Utilizadas
 
-**Use Lovable**
+*   **Vite:** Herramienta de construcción y servidor de desarrollo rápido.
+*   **React:** Biblioteca para construir interfaces de usuario.
+*   **TypeScript:** Superset de JavaScript que añade tipado estático.
+*   **shadcn-ui:** Colección de componentes de interfaz de usuario reutilizables.
+*   **Tailwind CSS:** Framework de CSS para un diseño rápido y personalizado.
+*   **React Router:** Para el enrutamiento del lado del cliente.
+*   **html2canvas:** Para realizar capturas de pantalla del formulario.
+*   **xlsx:** Para la generación de archivos de Excel.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d6536054-bd8a-45bb-89d5-72f58597a3a9) and start prompting.
+## Estructura de Archivos
 
-Changes made via Lovable will be committed automatically to this repo.
+El código fuente está organizado de la siguiente manera:
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+/src
+|-- /components/ui       # Componentes de UI de shadcn
+|-- /hooks               # Hooks personalizados de React
+|-- /lib                 # Funciones de utilidad (ej. cn)
+|-- /pages
+|   |-- Index.tsx        # Componente de la página principal
+|   `-- NotFound.tsx     # Componente para la página 404
+|-- App.tsx              # Componente raíz de la aplicación y configuración de rutas
+|-- main.tsx             # Punto de entrada de la aplicación
+|-- index.css            # Estilos globales y variables de CSS
+`-- ...
 ```
 
-**Edit a file directly in GitHub**
+## Funcionalidades Clave
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+*   **Introducción de Respuestas:** Formulario para 100 preguntas de opción múltiple y 3 adicionales.
+*   **Corrección de Respuestas:** Posibilidad de marcar respuestas como "correctas" o "incorrectas".
+*   **Generación de Excel:** Exporta las respuestas y la puntuación a un archivo `.xlsx`.
+*   **Captura de Pantalla:** Genera y descarga una imagen del formulario completo.
+*   **Diseño Adaptable:** La interfaz se ajusta a diferentes tamaños de pantalla.
 
-**Use GitHub Codespaces**
+## Scripts Disponibles
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+En el `package.json`, encontrarás los siguientes scripts:
 
-## What technologies are used for this project?
+*   `npm run dev`: Inicia el servidor de desarrollo en modo local.
+*   `npm run build`: Compila la aplicación para producción en el directorio `dist/`.
+*   `npm run preview`: Sirve el build de producción localmente para previsualización.
+*   `npm run deploy`: Ejecuta el script de predeploy y despliega la aplicación en GitHub Pages.
+*   `npm run predeploy`: Construye la aplicación y copia `index.html` a `404.html` para el correcto funcionamiento en GitHub Pages.
 
-This project is built with:
+## Configuración de Despliegue
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+La aplicación está configurada para ser desplegada en GitHub Pages desde la rama `main` y la carpeta `/dist`.
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/d6536054-bd8a-45bb-89d5-72f58597a3a9) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+*   **`vite.config.ts`**: El `base` se establece dinámicamente en `/sheet-to-scan-form/` para producción y `/` para desarrollo.
+*   **`src/App.tsx`**: El `BrowserRouter` utiliza un `basename` dinámico que coincide con la configuración de Vite para asegurar que el enrutamiento funcione tanto en local como en producción.
+*   **Manejo de 404 en GitHub Pages**: El script `predeploy` copia `dist/index.html` a `dist/404.html`. Esto redirige todas las solicitudes de rutas no encontradas a la aplicación de React, permitiendo que React Router maneje el enrutamiento en el lado del cliente.
